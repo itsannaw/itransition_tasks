@@ -52,9 +52,15 @@ const validators = [
 ];
 
 function validateInput() {
-  validators.forEach(({ isValid, message }) => {
-    if (!isValid(moves)) throw new Error(message);
-  });
+  let valid = true;
+  for (const { isValid, message } of validators) {
+    if (!isValid(moves)) {
+      valid = false;
+      console.log(message);
+      break;
+    }
+  };
+  return valid;
 }
 
 function makeTurn() {
@@ -62,7 +68,7 @@ function makeTurn() {
 }
 
 async function startGame() {
-  validateInput();
+  if (!validateInput()) return;
 
   let continueGame = true;
 
